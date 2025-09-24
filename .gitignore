@@ -1,0 +1,4 @@
+# Ignorar a pasta de dependências do Node
+node_modules/
+.env.example
+.env

@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stories",
+  "info": {
+    "singularName": "story",
+    "pluralName": "stories",
+    "displayName": "story"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "string"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "backgroundColor": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "expiresAt": {
+      "type": "datetime"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::profile.profile"
+    },
+    "viewers": {
+      "type": "biginteger"
+    }
+  }
+}

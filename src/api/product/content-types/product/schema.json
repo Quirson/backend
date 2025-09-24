@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "images": {
+      "type": "json"
+    },
+    "alibabaUrl": {
+      "type": "text"
+    },
+    "supplierId": {
+      "type": "string"
+    },
+    "supplierName": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "inStock": {
+      "type": "boolean"
+    },
+    "rating": {
+      "type": "decimal"
+    }
+  }
+}
