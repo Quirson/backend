@@ -407,6 +407,42 @@ export interface ApiChatMessageChatMessage extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEmailVerificationEmailVerification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'email_verifications';
+  info: {
+    displayName: 'Email Verification';
+    pluralName: 'email-verifications';
+    singularName: 'email-verification';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    code: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 6;
+        minLength: 6;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    expiration: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::email-verification.email-verification'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGroupGroup extends Struct.CollectionTypeSchema {
   collectionName: 'groups';
   info: {
@@ -1179,6 +1215,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::chat-message.chat-message': ApiChatMessageChatMessage;
+      'api::email-verification.email-verification': ApiEmailVerificationEmailVerification;
       'api::group.group': ApiGroupGroup;
       'api::post.post': ApiPostPost;
       'api::product.product': ApiProductProduct;

@@ -1,0 +1,29 @@
+{
+    "kind": "collectionType",
+    "collectionName": "email_verifications",
+    "info": {
+        "singularName": "email-verification",
+        "pluralName": "email-verifications",
+        "displayName": "Email Verification"
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "email": {
+            "type": "email",
+            "required": true
+        },
+        "code": {
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 6,
+            "required": true
+        },
+        "expiration": {
+            "type": "datetime",
+            "required": true
+        }
+    }
+}
