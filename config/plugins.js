@@ -1,13 +1,13 @@
 module.exports = {
-  graphql: {
-    config: {
-      endpoint: '/graphql',
-      shadowCRUD: true,
-      playgroundAlways: true,
-      depthLimit: 10,
-      amountLimit: 100,
-    },
-  },
+ // graphql: {
+ //   config: {
+   //   endpoint: '/graphql',
+     // shadowCRUD: true,
+     // playgroundAlways: true,
+     // depthLimit: 10,
+     // amountLimit: 100,
+   // },
+ //},
   upload: {
     config: {
       provider: 'cloudinary',

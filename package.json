@@ -10,9 +10,7 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/plugin-graphql": "^5.23.0",
     "@strapi/plugin-users-permissions": "^5.23.2",
-    "@strapi/provider-email-nodemailer": "^5.24.1",
     "@strapi/provider-upload-cloudinary": "^5.23.0",
     "@strapi/strapi": "^5.0.0",
     "axios": "^1.11.0",
