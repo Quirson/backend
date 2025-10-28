@@ -1,0 +1,162 @@
+{
+    "kind": "collectionType",
+    "collectionName": "profiles",
+    "info": {
+        "singularName": "profile",
+        "pluralName": "profiles",
+        "displayName": "Profile"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {
+        "i18n": {
+            "localized": true
+        }
+    },
+    "attributes": {
+        "Bio": {
+            "type": "text",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "default": "Ja Estou no Social Deal"
+        },
+        "DisplayName": {
+            "type": "string",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "required": true
+        },
+        "avatar": {
+            "type": "media",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "files"
+            ]
+        },
+        "coverImage": {
+            "type": "media",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "files"
+            ]
+        },
+        "location": {
+            "type": "string",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "default": "Mozambique"
+        },
+        "website": {
+            "type": "string",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "default": "www.socialDeal.com"
+        },
+        "dateOfBirth": {
+            "type": "date",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "required": true,
+            "default": "2025-09-01"
+        },
+        "isVerified": {
+            "type": "boolean",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "default": false
+        },
+        "followersCount": {
+            "type": "biginteger",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "default": "0"
+        },
+        "followingCount": {
+            "type": "biginteger",
+            "pluginOptions": {
+                "i18n": {
+                    "localized": true
+                }
+            },
+            "default": "0"
+        },
+        "likedPost": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "api::post.post",
+            "mappedBy": "likedBy"
+        },
+        "followers": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::profile.profile"
+        },
+        "following": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::profile.profile"
+        },
+        "received_messages": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::chat-message.chat-message"
+        },
+        "sent_messages": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::chat-message.chat-message"
+        },
+        "user": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "plugin::users-permissions.user",
+            "mappedBy": "profile"
+        },
+        "posts": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::post.post",
+            "mappedBy": "author"
+        },
+        "groups": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "api::group.group",
+            "mappedBy": "group_members"
+        }
+    }
+}

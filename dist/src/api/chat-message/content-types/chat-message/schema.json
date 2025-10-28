@@ -1,0 +1,50 @@
+{
+    "kind": "collectionType",
+    "collectionName": "chat_messages",
+    "info": {
+        "singularName": "chat-message",
+        "pluralName": "chat-messages",
+        "displayName": "Chat Message"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "content": {
+            "type": "text"
+        },
+        "messageType": {
+            "type": "enumeration",
+            "enum": [
+                "text, image, video, file"
+            ]
+        },
+        "media": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos",
+                "audios"
+            ]
+        },
+        "sender": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::profile.profile"
+        },
+        "isRead": {
+            "type": "boolean"
+        },
+        "chatRoom": {
+            "type": "string"
+        },
+        "receiver": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::profile.profile"
+        }
+    }
+}
