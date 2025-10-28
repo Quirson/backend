@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "custom_auths",
+  "info": {
+    "singularName": "custom-auth",
+    "pluralName": "custom-auths",
+    "displayName": "Custom Auth"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "action": {
+      "type": "string"
+    },
+    "data": {
+      "type": "json"
+    }
+  }
+}

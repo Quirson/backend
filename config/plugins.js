@@ -18,4 +18,11 @@ module.exports = {
       },
     },
   },
+  'users-permissions': {
+    config: {
+      jwt: {
+        expiresIn: '7d', // Tokens válidos por 7 dias
+      },
+    },
+  },
 };
