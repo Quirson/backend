@@ -7,7 +7,7 @@
     "displayName": "Profile"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {
     "i18n": {
@@ -130,16 +130,6 @@
       "relation": "oneToMany",
       "target": "api::profile.profile"
     },
-    "received_messages": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::chat-message.chat-message"
-    },
-    "sent_messages": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::chat-message.chat-message"
-    },
     "user": {
       "type": "relation",
       "relation": "oneToOne",
@@ -157,6 +147,12 @@
       "relation": "manyToMany",
       "target": "api::group.group",
       "mappedBy": "group_members"
+    },
+    "chat_messages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::chat-message.chat-message",
+      "mappedBy": "sender"
     }
   }
 }

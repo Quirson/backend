@@ -4,20 +4,26 @@
   "info": {
     "singularName": "chat-message",
     "pluralName": "chat-messages",
-    "displayName": "Chat Message"
+    "displayName": "Chat Message",
+    "description": "Mensagens de chat privado e em grupo"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "content": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "messageType": {
       "type": "enumeration",
+      "default": "text",
       "enum": [
-        "text, image, video, file"
+        "text",
+        "image",
+        "video",
+        "file"
       ]
     },
     "media": {
@@ -32,19 +38,23 @@
     },
     "sender": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::profile.profile"
-    },
-    "isRead": {
-      "type": "boolean"
-    },
-    "chatRoom": {
-      "type": "string"
+      "relation": "manyToOne",
+      "target": "api::profile.profile",
+      "inversedBy": "chat_messages"
     },
     "receiver": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::profile.profile"
+    },
+    "isRead": {
+      "type": "boolean",
+      "default": false
+    },
+    "group": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::group.group"
     }
   }
 }

@@ -376,20 +376,21 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiChatMessageChatMessage extends Struct.CollectionTypeSchema {
   collectionName: 'chat_messages';
   info: {
+    description: 'Mensagens de chat privado e em grupo';
     displayName: 'Chat Message';
     pluralName: 'chat-messages';
     singularName: 'chat-message';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
-    chatRoom: Schema.Attribute.String;
-    content: Schema.Attribute.Text;
+    content: Schema.Attribute.Text & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    isRead: Schema.Attribute.Boolean;
+    group: Schema.Attribute.Relation<'manyToOne', 'api::group.group'>;
+    isRead: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -397,10 +398,13 @@ export interface ApiChatMessageChatMessage extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     media: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    messageType: Schema.Attribute.Enumeration<['text, image, video, file']>;
+    messageType: Schema.Attribute.Enumeration<
+      ['text', 'image', 'video', 'file']
+    > &
+      Schema.Attribute.DefaultTo<'text'>;
     publishedAt: Schema.Attribute.DateTime;
-    receiver: Schema.Attribute.Relation<'oneToOne', 'api::profile.profile'>;
-    sender: Schema.Attribute.Relation<'oneToOne', 'api::profile.profile'>;
+    receiver: Schema.Attribute.Relation<'manyToOne', 'api::profile.profile'>;
+    sender: Schema.Attribute.Relation<'manyToOne', 'api::profile.profile'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -451,7 +455,7 @@ export interface ApiGroupGroup extends Struct.CollectionTypeSchema {
     singularName: 'group';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     admin: Schema.Attribute.Relation<'oneToOne', 'api::profile.profile'>;
@@ -489,7 +493,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     singularName: 'post';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     author: Schema.Attribute.Relation<'manyToOne', 'api::profile.profile'>;
@@ -527,7 +531,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     singularName: 'product';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     alibabaUrl: Schema.Attribute.Text;
@@ -565,7 +569,7 @@ export interface ApiProfileProfile extends Struct.CollectionTypeSchema {
     singularName: 'profile';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   pluginOptions: {
     i18n: {
@@ -586,6 +590,10 @@ export interface ApiProfileProfile extends Struct.CollectionTypeSchema {
         };
       }> &
       Schema.Attribute.DefaultTo<'Ja Estou no Social Deal'>;
+    chat_messages: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::chat-message.chat-message'
+    >;
     coverImage: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -649,14 +657,6 @@ export interface ApiProfileProfile extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'Mozambique'>;
     posts: Schema.Attribute.Relation<'oneToMany', 'api::post.post'>;
     publishedAt: Schema.Attribute.DateTime;
-    received_messages: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::chat-message.chat-message'
-    >;
-    sent_messages: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::chat-message.chat-message'
-    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -682,7 +682,7 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
     singularName: 'story';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     author: Schema.Attribute.Relation<'oneToOne', 'api::profile.profile'>;

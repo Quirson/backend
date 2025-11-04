@@ -7,7 +7,7 @@
     "displayName": "Post"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {

@@ -8,7 +8,12 @@ module.exports = [
     config: {
       enabled: true,
       headers: '*',
-      origin: ['http://localhost:3000'], // Adicione a URL do seu front-end aqui
+      origin: [
+        'http://localhost:3000', // Front-End local
+        'http://localhost:1337', // Seu Admin Strapi local
+        // *** IMPORTANTE: ADICIONAR O DOMÍNIO DO NGROK AQUI ***
+        'https://prolabor-axel-supraorbital.ngrok-free.dev',
+      ],
     },
   },
   'strapi::poweredBy',
@@ -19,3 +24,5 @@ module.exports = [
   'strapi::favicon',
   'strapi::public',
 ];
+
+// O SEU SERVIDOR STRAPI DEVE SER REINICIADO DEPOIS DE SALVAR ESTE FICHEIRO.

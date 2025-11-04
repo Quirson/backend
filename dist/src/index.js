@@ -113,23 +113,31 @@ exports.default = {
             // Enviar mensagem para um chat privado
             socket.on('send_private_message', async (data) => {
                 try {
-                    const { content, receiverId } = data;
+                    const { content, receiverId, mediaId, messageType } = data;
                     const senderId = socket.profileId;
-                    const chatRoomId = [senderId, receiverId].sort().join('_');
-                    console.log('📩 Nova mensagem privada:', { content, senderId, receiverId });
+                    if (!receiverId)
+                        return;
+                    console.log('📩 Nova mensagem privada recebida:', data);
+                    const messageData = {
+                        content: content,
+                        sender: senderId,
+                        receiver: receiverId,
+                        messageType: messageType || 'text',
+                        publishedAt: new Date(),
+                    };
+                    if (mediaId) {
+                        messageData.media = mediaId;
+                    }
                     const message = await strapi.entityService.create('api::chat-message.chat-message', {
-                        data: {
-                            content: content,
-                            sender: senderId,
-                            receiver: receiverId,
-                        },
-                        populate: ['sender', 'receiver'],
+                        data: messageData,
+                        populate: ['sender', 'receiver', 'media'], // GARANTIR QUE A MÉDIA É POPULADA
                     });
+                    const chatRoomId = [senderId, receiverId].sort().join('_');
                     io.to(chatRoomId).emit('new_private_message', {
                         message,
                         chatRoomId,
                     });
-                    console.log(`✅ Mensagem privada enviada para a sala: ${chatRoomId}`);
+                    console.log(`✅ Mensagem (tipo: ${messageType}) enviada para a sala: ${chatRoomId}`);
                 }
                 catch (error) {
                     console.error('❌ Erro ao enviar mensagem privada:', error);
@@ -139,27 +147,39 @@ exports.default = {
             // Enviar mensagem para um grupo
             socket.on('send_message', async (data) => {
                 try {
-                    const { groupId, content } = data;
+                    const { groupId, content, messageType, mediaId } = data;
                     const senderId = socket.profileId;
-                    console.log('📩 Nova mensagem:', { groupId, content, senderId });
-                    const message = await strapi.entityService.create('api::chat-message.chat-message', {
-                        data: {
-                            content: content,
-                            group: groupId,
-                            sender: senderId,
-                            publishedAt: new Date()
-                        },
-                        populate: ['sender']
+                    if (!groupId) {
+                        console.error('❌ Group ID não fornecido.');
+                        return;
+                    }
+                    console.log('📩 Nova mensagem de grupo recebida:', data);
+                    const messageData = {
+                        content: content,
+                        group: groupId,
+                        sender: senderId,
+                        messageType: messageType || 'text',
+                        publishedAt: new Date(),
+                    };
+                    if (mediaId) {
+                        messageData.media = mediaId;
+                    }
+                    const message = await strapi.entityService.create('api::chat-message.chat-message', // Usamos a mesma tabela!
+                    {
+                        data: messageData,
+                        populate: ['sender', 'group', 'media'], // Popular com os dados certos
                     });
-                    io.to(`group_${groupId}`).emit('new_message', {
+                    const roomName = `group_${groupId}`;
+                    // Envia para a sala do grupo
+                    io.to(roomName).emit('new_message', {
                         message,
                         groupId,
                     });
-                    console.log('✅ Mensagem enviada para o grupo:', groupId);
+                    console.log(`✅ Mensagem de grupo enviada para a sala: ${roomName}`);
                 }
                 catch (error) {
-                    console.error('❌ Erro ao enviar mensagem:', error);
-                    socket.emit('error', { message: 'Falha ao enviar mensagem' });
+                    console.error('❌ Erro ao enviar mensagem de grupo:', error);
+                    socket.emit('error', { message: 'Falha ao enviar mensagem de grupo' });
                 }
             });
             // ----------------------------------------------------
